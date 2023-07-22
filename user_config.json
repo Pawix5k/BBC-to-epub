@@ -1,4 +1,9 @@
 {
-    "links": ["https://www.bbc.com/persian/articles/cz7jlxe2rp0o"],
-    "title": "bbc_arts_1"
+    "links": [
+        "https://www.bbc.com/persian/world-66272851",
+        "https://www.bbc.com/persian/articles/cgl8dpyg5p4o",
+        "https://www.bbc.com/russian/articles/c2eg90d7gg9o",
+        "https://www.bbc.com/zhongwen/simp/world-66255254"
+    ],
+    "title": "bbc_arts_3"
 }

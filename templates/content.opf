@@ -2,6 +2,12 @@
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="uuid_id">
   <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata">
     <dc:title>{{ content.title }}</dc:title>
+    <dc:creator>author</dc:creator>
+    <dc:contributor>user</dc:contributor>
+    <dc:identifier>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</dc:identifier>
+    <dc:publisher>BBC</dc:publisher>
+    <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+    <dc:language>en</dc:language>
   </metadata>
   <manifest>
     <item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>
@@ -15,18 +21,12 @@
     {% for i, img_link in content.get_enumerated_img_links() %}
     <item id="pic{{ i }}" href="{{ img_link }}" media-type="image/jpeg"/>
     {% endfor %}
-
-
-    <!-- <item id="id001" href="index_split_001.html" media-type="application/xhtml+xml"/> -->
-    <!-- <item id="pic1" href="images/image-1.jpeg" media-type="image/jpeg"/> -->
   </manifest>
   <spine toc="ncx">
     <itemref idref="titlepage"/>
     {% for article in content.articles %}
     <itemref idref="{{ article.file_name }}"/>
     {% endfor %}
-
-    <!-- <itemref idref="id001"/> -->
   </spine>
   <guide>
     <reference type="cover" href="titlepage.xhtml" title="Cover"/>

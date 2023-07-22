@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from bs4 import BeautifulSoup, NavigableString
 import requests
 
-from config import TEMP_DIR
+from config import TEMP_DIR, TEMP_IMG_DIR
 
 STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"
@@ -15,6 +15,7 @@ ALLOWED_ATTRS = ["src"]
 class ImgLink:
     web_url: str
     local_url: str
+    filename: str
 
 class Content:
     def __init__(self, title, links):
@@ -44,14 +45,15 @@ class ArticleContent:
         self.content = self._extract_content(site_content)
         self.title = self._extract_title()
         self.img_links = self._get_and_update_img_links()
-        # self._download_imgs(link.url for link in self.img_links)
-        self.temp_save_to_file()
+        self._download_imgs()
     
-    def _get_html(self):
+    def _get_html(self, local=False):
         # temporary to avoid making requests
-        with open(r"playground\sample_art.html", "r", encoding="utf8") as f:
-            html = f.read()
-        return html
+        if local:
+            with open(r"playground\sample_art.html", "r", encoding="utf8") as f:
+                html = f.read()
+            return html
+        return requests.get(self.link).text
     
     def _get_site_content(self):
         html = self._get_html()
@@ -98,11 +100,10 @@ class ArticleContent:
 
         return body
 
-    def _download_imgs(self, img_links):
-        for link in img_links:
-            file_name = link.split("/")[-1]
-            with open(TEMP_DIR / file_name, 'wb') as f:
-                f.write(requests.get(link).content)
+    def _download_imgs(self):
+        for link in self.img_links:
+            with open(TEMP_IMG_DIR / link.filename, 'wb') as f:
+                f.write(requests.get(link.web_url).content)
     
     def _get_and_update_img_links(self):
         links = []
@@ -113,12 +114,6 @@ class ArticleContent:
                 img_url = descendant["src"]
                 img_filename = img_url.split("/")[-1]
                 local_link = rf"img/{img_filename}"
-                links.append(ImgLink(img_url, local_link))
+                links.append(ImgLink(img_url, local_link, img_filename))
                 descendant["src"] = local_link
         return links
-    
-    def temp_save_to_file(self):
-        with open(r"playground/temp.html", "w", encoding="utf8") as f:
-            f.write(str(self.content.prettify()))
-
-

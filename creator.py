@@ -3,7 +3,7 @@ from pathlib import Path
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from config import TEMP_DIR
+from config import TEMP_DIR, TEMP_IMG_DIR
 from content import Content
 
 
@@ -14,6 +14,9 @@ class Creator:
 
     def _copy_static(self):
         shutil.copytree(r"static", self.output_path)
+    
+    def _copy_img(self):
+        shutil.copytree(TEMP_IMG_DIR, self.output_path / "img")
     
     def _create_articles_htmls(self, env):
         template = env.get_template("content.html")
@@ -37,7 +40,9 @@ class Creator:
             autoescape=select_autoescape()
         )
         shutil.rmtree(TEMP_DIR)
+        shutil.rmtree(TEMP_IMG_DIR)
         self._copy_static()
+        self._copy_img()
         self._create_articles_htmls(env)
         self._create_content_opf(env)
         self._create_toc_ncx(env)
