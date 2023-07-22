@@ -1,35 +1,50 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+
 from bs4 import BeautifulSoup, NavigableString
 import requests
 
 from config import TEMP_DIR
 
-
 STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"
 ALLOWED_ATTRS = ["src"]
+
+@dataclass
+class ImgLink:
+    web_url: str
+    local_url: str
 
 class Content:
     def __init__(self, title, links):
         self.title = title
         self.links = links
-        self.content = self._get_articles_contents()
+        self.articles = self._get_articles_contents()
     
 
-    def _get_articles_contents(self):
-        site_contents = []
-        for link in self.links:
-            site_contents.append(SiteContent(link))
+    def _get_articles_contents(self) -> list[ArticleContent]:
+        articles = []
+        for i, link in enumerate(self.links, 1):
+            articles.append(ArticleContent(link, i))
+        return articles
+
+    def get_enumerated_img_links(self):
+        return enumerate((link.local_url for article in self.articles for link in article.img_links), 1)
 
 
-class SiteContent:
-    def __init__(self, link):
+class ArticleContent:
+    def __init__(self, link, i):
+        self.i = i
+        self.file_name = f"article_{str(i).zfill(3)}"
         self.link = link
         site_content = self._get_site_content()
         self.lang = self._extract_lang(site_content)
         self.is_rtl = self._check_if_rtl(site_content)
         self.content = self._extract_content(site_content)
-        img_links = self._extract_img_links()
-        self._download_imgs(img_links)
+        self.title = self._extract_title()
+        self.img_links = self._get_and_update_img_links()
+        # self._download_imgs(link.url for link in self.img_links)
         self.temp_save_to_file()
     
     def _get_html(self):
@@ -45,8 +60,11 @@ class SiteContent:
     def _extract_lang(self, soup):
         return soup.html["lang"]
 
+    def _extract_title(self):
+        return self.content.find("h1").string
+
     def _check_if_rtl(self, soup):
-        if "dir" in soup.html and soup.html["dir"] == "rtl":
+        if "dir" in soup.html.attrs and soup.html["dir"] == "rtl":
             return True
         return False
     
@@ -79,15 +97,6 @@ class SiteContent:
             descendant.attrs = {k: v for k, v in descendant.attrs.items() if k in ALLOWED_ATTRS}
 
         return body
-    
-    def _extract_img_links(self):
-        links = []
-        for descendant in self.content.descendants:
-            if isinstance(descendant, NavigableString):
-                continue
-            if descendant.name == "img":
-                links.append(descendant["src"])
-        return links
 
     def _download_imgs(self, img_links):
         for link in img_links:
@@ -95,8 +104,21 @@ class SiteContent:
             with open(TEMP_DIR / file_name, 'wb') as f:
                 f.write(requests.get(link).content)
     
+    def _get_and_update_img_links(self):
+        links = []
+        for descendant in self.content.descendants:
+            if isinstance(descendant, NavigableString):
+                continue
+            if descendant.name == "img":
+                img_url = descendant["src"]
+                img_filename = img_url.split("/")[-1]
+                local_link = rf"img/{img_filename}"
+                links.append(ImgLink(img_url, local_link))
+                descendant["src"] = local_link
+        return links
+    
     def temp_save_to_file(self):
         with open(r"playground/temp.html", "w", encoding="utf8") as f:
-            f.write(str(self.content))
+            f.write(str(self.content.prettify()))
 
 

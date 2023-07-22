@@ -1,6 +1,7 @@
 import json
 
 from content import Content
+from creator import Creator
 
 
 def get_user_config():
@@ -9,6 +10,12 @@ def get_user_config():
     return config
 
 
-if __name__ == "__main__":
+def main():
     config = get_user_config()
     content = Content(config["title"], config["links"])
+    creator = Creator(content)
+    creator.create_epub()
+
+
+if __name__ == "__main__":
+    main()

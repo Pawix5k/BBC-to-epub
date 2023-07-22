@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+  <head>
+  </head>
+  <docTitle>
+    <text>{{ content.title }}</text>
+  </docTitle>
+  <navMap>
+    {% for article in content.articles %}
+    <navPoint id="{{ article.file_name }}" playOrder="{{ article.i }}" class="chapter">
+      <navLabel>
+        <text>{{ article.title }}</text>
+      </navLabel>
+      <content src="{{ article.file_name }}.html"/>
+    </navPoint>
+    {% endfor %}
+  </navMap>
+</ncx>

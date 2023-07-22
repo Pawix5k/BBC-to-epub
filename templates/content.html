@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fa" xml:lang="fa">
+
+<head>
+    <title>{{ article_content.title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="page_styles.css" />
+</head>
+{{ article_content.content.prettify()|safe }}
+</html>
