@@ -1,9 +1,10 @@
 import shutil
-from pathlib import Path
+import os
+from zipfile import ZipFile
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from config import TEMP_DIR, TEMP_IMG_DIR
+from config import TEMP_DIR, TEMP_IMG_DIR, OUTPUT_DIR
 from content import Content
 
 
@@ -11,6 +12,10 @@ class Creator:
     def __init__(self, content: Content):
         self.content = content
         self.output_path = TEMP_DIR / content.title
+    
+    def _remove_old_imgs(self):
+        for file in os.listdir(TEMP_IMG_DIR):
+            os.remove(TEMP_IMG_DIR / file)
 
     def _copy_static(self):
         shutil.copytree(r"static", self.output_path)
@@ -39,10 +44,13 @@ class Creator:
             loader=PackageLoader("main"),
             autoescape=select_autoescape()
         )
-        shutil.rmtree(TEMP_DIR)
-        shutil.rmtree(TEMP_IMG_DIR)
+        # shutil.rmtree(TEMP_DIR)
+        # self._remove_old_imgs()
         self._copy_static()
         self._copy_img()
         self._create_articles_htmls(env)
         self._create_content_opf(env)
         self._create_toc_ncx(env)
+        shutil.make_archive(TEMP_DIR / self.content.title, 'zip',  root_dir=self.output_path)
+        shutil.copy(TEMP_DIR / (self.content.title + ".zip"), OUTPUT_DIR / (self.content.title + ".epub"))
+             

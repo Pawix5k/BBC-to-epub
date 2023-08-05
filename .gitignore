@@ -2,3 +2,7 @@ playground
 venv
 __pycache__
 TEMP
+TEMP_IMG
+*.zip
+*.epub
+output/*

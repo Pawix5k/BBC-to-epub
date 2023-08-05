@@ -2,6 +2,7 @@ import json
 
 from content import Content
 from creator import Creator
+from utils import clear_temp_dirs
 
 
 def get_user_config():
@@ -11,6 +12,7 @@ def get_user_config():
 
 
 def main():
+    clear_temp_dirs()
     config = get_user_config()
     content = Content(config["title"], config["links"])
     creator = Creator(content)
