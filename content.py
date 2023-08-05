@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from bs4 import BeautifulSoup, NavigableString
 import requests
 
-from config import TEMP_DIR, TEMP_IMG_DIR
+from config import TEMP_IMG_DIR
 
 STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"
@@ -23,11 +23,15 @@ class Content:
         self.links = links
         self.articles = self._get_articles_contents()
     
-
     def _get_articles_contents(self) -> list[ArticleContent]:
         articles = []
         for i, link in enumerate(self.links, 1):
-            articles.append(ArticleContent(link, i))
+            try:
+                article = ArticleContent(link, i)
+            except AttributeError:
+                print(f"Article '{link}' seems to be incorrect, skipped.")
+                continue
+            articles.append(article)
         return articles
 
     def get_enumerated_img_links(self):
@@ -47,12 +51,7 @@ class ArticleContent:
         self.img_links = self._get_and_update_img_links()
         self._download_imgs()
     
-    def _get_html(self, local=False):
-        # temporary to avoid making requests
-        if local:
-            with open(r"playground\sample_art.html", "r", encoding="utf8") as f:
-                html = f.read()
-            return html
+    def _get_html(self):
         return requests.get(self.link).text
     
     def _get_site_content(self):
@@ -85,7 +84,9 @@ class ArticleContent:
                     figcaption = child_child.find("figcaption")
                     figure.append(img)
                     if figcaption:
-                        figure.append(figcaption)
+                        if figcaption.find("span", recursive=False):
+                            figcaption.span.extract()
+                        figure.append(figcaption.p)
                     elements.append(figure)
         body = soup.new_tag("body")
         if self.is_rtl:

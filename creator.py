@@ -1,17 +1,18 @@
 import shutil
 import os
-from zipfile import ZipFile
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from config import TEMP_DIR, TEMP_IMG_DIR, OUTPUT_DIR
 from content import Content
+from utils import clear_temp_dirs
 
 
 class Creator:
-    def __init__(self, content: Content):
-        self.content = content
-        self.output_path = TEMP_DIR / content.title
+    def __init__(self, title: str, urls: list[str]):
+        self.title = title
+        self.content = Content(title, urls)
+        self.output_path = TEMP_DIR / title
     
     def _remove_old_imgs(self):
         for file in os.listdir(TEMP_IMG_DIR):
@@ -44,8 +45,7 @@ class Creator:
             loader=PackageLoader("main"),
             autoescape=select_autoescape()
         )
-        # shutil.rmtree(TEMP_DIR)
-        # self._remove_old_imgs()
+        clear_temp_dirs()
         self._copy_static()
         self._copy_img()
         self._create_articles_htmls(env)
@@ -53,4 +53,5 @@ class Creator:
         self._create_toc_ncx(env)
         shutil.make_archive(TEMP_DIR / self.content.title, 'zip',  root_dir=self.output_path)
         shutil.copy(TEMP_DIR / (self.content.title + ".zip"), OUTPUT_DIR / (self.content.title + ".epub"))
-             
+        print(f"Created '{self.title}.epub' in '{OUTPUT_DIR}'")
+        clear_temp_dirs()

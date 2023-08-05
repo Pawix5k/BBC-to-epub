@@ -1,21 +1,16 @@
-import json
+import sys
 
-from content import Content
 from creator import Creator
-from utils import clear_temp_dirs
-
-
-def get_user_config():
-    with open("user_config.json", "r") as f:
-        config = json.load(f)
-    return config
+from utils import get_user_config
 
 
 def main():
-    clear_temp_dirs()
-    config = get_user_config()
-    content = Content(config["title"], config["links"])
-    creator = Creator(content)
+    try:
+        config = get_user_config()
+    except ValueError as e:
+        print(e)
+        sys.exit()
+    creator = Creator(config.title, config.urls)
     creator.create_epub()
 
 
