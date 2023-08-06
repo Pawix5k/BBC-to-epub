@@ -57,12 +57,8 @@ python3 main.py
 ```
 
 ## Examples
-
-![screenshot_2023_08_05T23_31_33+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/36ac7e11-bdc3-45ac-a861-a0f693e246ce)
-![screenshot_2023_08_05T23_39_17+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/735a7b2b-78c8-46a9-809f-8f678ad6110b)
-![screenshot_2023_08_05T23_31_14+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/907796a2-2206-46bc-9d3e-519683fcb5b9)
-![screenshot_2023_08_05T23_34_12+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/7f57b437-c645-4c6b-b705-8425f809d812)
-![screenshot_2023_08_05T23_33_53+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/3369c330-5e0e-4c85-8d9e-fd56187fd0b2)
-![screenshot_2023_08_06T13_12_51+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/c28ac1fb-0a14-46c9-9936-523aaa7575d1)
-
-
+![screenshot_2023_08_05T23_31_33+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/5a20dd03-dee6-4879-a443-3d57bc5ccf09)
+![screenshot_2023_08_05T23_39_17+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/be875d3c-d1dd-4975-b75a-8c8f7cbe3b99)
+![screenshot_2023_08_05T23_31_14+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/1b05f460-f469-4b1d-95aa-96de88d75908)
+![screenshot_2023_08_05T23_34_12+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/03d186cd-eb34-46e9-8218-5ed3c6481de5)
+![screenshot_2023_08_05T23_33_53+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/540e97cb-21e9-4d30-9050-a4a7653832c7)
