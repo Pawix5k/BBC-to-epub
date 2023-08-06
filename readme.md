@@ -63,5 +63,6 @@ python3 main.py
 ![screenshot_2023_08_05T23_31_14+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/907796a2-2206-46bc-9d3e-519683fcb5b9)
 ![screenshot_2023_08_05T23_34_12+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/7f57b437-c645-4c6b-b705-8425f809d812)
 ![screenshot_2023_08_05T23_33_53+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/3369c330-5e0e-4c85-8d9e-fd56187fd0b2)
+![screenshot_2023_08_06T13_12_51+0200](https://github.com/Pawix5k/BBC-to-epub/assets/35242389/c28ac1fb-0a14-46c9-9936-523aaa7575d1)
 
 
