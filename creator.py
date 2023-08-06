@@ -10,6 +10,7 @@ from utils import clear_temp_dirs
 
 class Creator:
     def __init__(self, title: str, urls: list[str]):
+        clear_temp_dirs()
         self.title = title
         self.content = Content(title, urls)
         self.output_path = TEMP_DIR / title
@@ -45,7 +46,6 @@ class Creator:
             loader=PackageLoader("main"),
             autoescape=select_autoescape()
         )
-        clear_temp_dirs()
         self._copy_static()
         self._copy_img()
         self._create_articles_htmls(env)
