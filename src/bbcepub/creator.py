@@ -53,7 +53,6 @@ class Creator:
         shutil.make_archive(self.tmp_dir / self.content.title, 'zip',  root_dir=self.staging_dir)
         shutil.copy(self.tmp_dir / (self.content.title + ".zip"), Path(self.content.title + ".epub"))
         print(f"Created '{self.title}.epub'")
-        # clear_temp_dirs()
 
 
 def create_epub(filename, links):
