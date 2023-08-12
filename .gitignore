@@ -6,3 +6,4 @@ TEMP_IMG
 *.zip
 *.epub
 output/*
+src/bbcepub.egg-info
