@@ -1,15 +1,16 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 
 from bs4 import BeautifulSoup, NavigableString
 import requests
 
-from bbcepub.config import TEMP_IMG_DIR
 
 STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"
 ALLOWED_ATTRS = ["src"]
+
 
 @dataclass
 class ImgLink:
@@ -17,17 +18,20 @@ class ImgLink:
     local_url: str
     filename: str
 
+
 class Content:
-    def __init__(self, title, links):
+    def __init__(self, title, links, tmp_dir):
         self.title = title
         self.links = links
+        self.img_dir = tmp_dir / "img"
+        os.mkdir(self.img_dir)
         self.articles = self._get_articles_contents()
     
     def _get_articles_contents(self) -> list[ArticleContent]:
         articles = []
         for i, link in enumerate(self.links, 1):
             try:
-                article = ArticleContent(link, i)
+                article = ArticleContent(link, i, self.img_dir)
             except AttributeError:
                 print(f"Article '{link}' seems to be incorrect, skipped.")
                 continue
@@ -39,10 +43,11 @@ class Content:
 
 
 class ArticleContent:
-    def __init__(self, link, i):
+    def __init__(self, link, i, img_dir):
         self.i = i
         self.file_name = f"article_{str(i).zfill(3)}"
         self.link = link
+        self.img_dir = img_dir
         site_content = self._get_site_content()
         self.lang = self._extract_lang(site_content)
         self.is_rtl = self._check_if_rtl(site_content)
@@ -103,7 +108,7 @@ class ArticleContent:
 
     def _download_imgs(self):
         for link in self.img_links:
-            with open(TEMP_IMG_DIR / link.filename, 'wb') as f:
+            with open(self.img_dir / link.filename, 'wb') as f:
                 f.write(requests.get(link.web_url).content)
     
     def _get_and_update_img_links(self):

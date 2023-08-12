@@ -1,25 +1,26 @@
 
 import argparse
 import sys
+import os
+from pathlib import Path
 
-from bbcepub.creator import Creator
-from bbcepub.utils import get_user_config, clear_temp_dirs
+from bbcepub.creator import create_epub
+from bbcepub.utils import get_user_config
 
 
 def main():
     print("dd")
 
-    parser = argparse.ArgumentParser(description="conver BBC articles to .epub")
+    parser = argparse.ArgumentParser(description="convert BBC articles to .epub")
     parser.add_argument('input_path', type=str, help='an integer for the accumulator')
     args = parser.parse_args()
 
     print(args.input_path)
-    path = args.input_path
 
-    with open(path, "r") as f:
-        print(f.readlines())
+    name, links = get_user_config(Path(args.input_path))
     
-    clear_temp_dirs()
+    create_epub(name, links)
+
 
 
     # try:
