@@ -1,12 +1,12 @@
 [project]
 name = "bbcepub"
-version = "0.0.2"
+version = "0.0.1"
 authors = [
-  { name="Example Author", email="author@example.com" },
+  { name="Pawix5k", email="pawelpurzyk@gmail.com" },
 ]
-description = "A small example package"
+description = "Package for converting BBC article links to .epub"
 readme = "readme.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 dependencies = [
   'beautifulsoup4==4.12.2',
   'certifi==2023.5.7',
