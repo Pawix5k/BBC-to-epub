@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from bs4 import BeautifulSoup, NavigableString
 import requests
 
-from config import TEMP_IMG_DIR
+from bbcepub.config import TEMP_IMG_DIR
 
 STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"

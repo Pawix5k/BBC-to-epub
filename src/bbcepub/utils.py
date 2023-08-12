@@ -3,10 +3,11 @@ import os
 import shutil
 import sys
 
-from config import USER_INPUT_PATH, TEMP_DIR, TEMP_IMG_DIR
+from bbcepub.config import USER_INPUT_PATH, TEMP_DIR, TEMP_IMG_DIR
 
 
 def read_user_input():
+    print(USER_INPUT_PATH)
     try:
         with open(USER_INPUT_PATH, "r") as f:
             lines = f.readlines()

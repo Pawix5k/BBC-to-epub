@@ -1,0 +1,14 @@
+pyproject.toml
+readme.md
+src/bbcepub/__init__.py
+src/bbcepub/__main__.py
+src/bbcepub/config.py
+src/bbcepub/content.py
+src/bbcepub/creator.py
+src/bbcepub/main.py
+src/bbcepub/utils.py
+src/bbcepub.egg-info/PKG-INFO
+src/bbcepub.egg-info/SOURCES.txt
+src/bbcepub.egg-info/dependency_links.txt
+src/bbcepub.egg-info/requires.txt
+src/bbcepub.egg-info/top_level.txt

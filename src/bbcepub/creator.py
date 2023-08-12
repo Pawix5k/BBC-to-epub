@@ -3,9 +3,9 @@ import os
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from config import TEMP_DIR, TEMP_IMG_DIR, OUTPUT_DIR
-from content import Content
-from utils import clear_temp_dirs
+from bbcepub.config import TEMP_DIR, TEMP_IMG_DIR, OUTPUT_DIR
+from bbcepub.content import Content
+from bbcepub.utils import clear_temp_dirs
 
 
 class Creator:
