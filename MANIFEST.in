@@ -1,0 +1,2 @@
+include src/bbcepub/static/*
+include src/bbcepub/templates/*
