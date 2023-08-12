@@ -8,15 +8,19 @@ Support for both left-to-right and right-to-left languages.
 ## Installation
 Make sure you have python 3.10+ installed
 
+### Clone repo
 ```
 git clone https://github.com/Pawix5k/BBC-to-epub.git
 cd BBC-to-epub
+```
+
+### Install package
+
+```
 python -m pip install .
 ```
 or
 ```
-git clone https://github.com/Pawix5k/BBC-to-epub.git
-cd BBC-to-epub
 python3 -m pip install .
 ```
 
