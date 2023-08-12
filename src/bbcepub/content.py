@@ -11,6 +11,8 @@ STANDARD_TAGS = ["h1", "h2", "h3", "h4", "h5", "p"]
 FIGURE_TAG = "figure"
 ALLOWED_ATTRS = ["src"]
 
+URL_START = r"https://www.bbc.com/"
+
 
 @dataclass
 class ImgLink:
@@ -35,6 +37,9 @@ class Content:
             except AttributeError:
                 print(f"Article '{link}' seems to be incorrect, skipped.")
                 continue
+            except ValueError as e:
+                print(e)
+                continue
             articles.append(article)
         return articles
 
@@ -46,6 +51,8 @@ class ArticleContent:
     def __init__(self, link, i, img_dir):
         self.i = i
         self.file_name = f"article_{str(i).zfill(3)}"
+        if not link.startswith(URL_START):
+            raise ValueError(f"Wrong url for '{link}', should start with '{URL_START}', skipped.")
         self.link = link
         self.img_dir = img_dir
         site_content = self._get_site_content()
