@@ -8,52 +8,39 @@ Support for both left-to-right and right-to-left languages.
 ## Installation
 Make sure you have python 3.10+ installed
 
-### Clone repository
-
+### Clone repo
 ```
 git clone https://github.com/Pawix5k/BBC-to-epub.git
+cd BBC-to-epub
 ```
 
-### Create virtual environment.
+### Install package
 
 ```
-python -m venv venv
+python -m pip install .
 ```
 or
 ```
-python3 -m venv venv
-```
-
-### Activate virtual environment
-```
-venv/Scripts/activate
-```
-
-### Install dependencies.
-
-```
-python -m pip install -r requirements.txt
-```
-or
-```
-python3 -m pip install -r requirements.txt
+python3 -m pip install .
 ```
 
 ## Usage
 
-### Change first line of user_input.txt to desired file name and paste links to articles in subsequent lines.
+### Create .txt file with title as first line and urls to articles in subsequent lines
+
 ```
 bbc-articles
 https://www.bbc.com/somelang/someid
 https://www.bbc.com/somelang/articles/otherid
 ```
+
 ### Run the script.
 ```
-python main.py
+python -m bbcepub <your-txt-file>
 ```
 or
 ```
-python3 main.py
+python3 -m bbcepub <your-txt-file>
 ```
 
 ## Examples
